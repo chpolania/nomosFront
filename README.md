@@ -5,6 +5,8 @@ Frontend responsive en React + TypeScript, basado en la identidad visual existen
 
 ## Desarrollo
 
+Requiere Node.js 18.18.0 o superior.
+
 ```bash
 npm install
 npm run dev
