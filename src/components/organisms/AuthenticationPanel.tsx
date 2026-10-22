@@ -1,7 +1,11 @@
 import Kicker from '../atoms/Kicker'
 import AuthForm from '../molecules/AuthForm'
 
-function AuthenticationPanel() {
+type AuthenticationPanelProps = {
+  onAuthenticated?: () => void
+}
+
+function AuthenticationPanel({ onAuthenticated }: AuthenticationPanelProps) {
   return (
     <main className="auth-layout">
       <section className="auth-story" aria-label="Nomos Impresores">
@@ -20,7 +24,7 @@ function AuthenticationPanel() {
         </div>
       </section>
       <section className="auth-panel" aria-label="Acceso a tu cuenta">
-        <AuthForm />
+        <AuthForm onAuthenticated={onAuthenticated} />
       </section>
     </main>
   )

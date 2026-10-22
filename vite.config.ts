@@ -34,5 +34,6 @@ export default defineConfig({
     minify: 'esbuild',
     chunkSizeWarningLimit: 1500,
   },
+  envPrefix: ['VITE_', 'BASE'],
   plugins: [react()],
 });
