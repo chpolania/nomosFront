@@ -5,9 +5,6 @@ import react from '@vitejs/plugin-react-swc';
 export default defineConfig({
   build: {
     rollupOptions: {
-      input: {
-        index: 'src/main.tsx',
-      },
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
