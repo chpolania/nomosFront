@@ -31,6 +31,7 @@ export default defineConfig({
     commonjsOptions: {
       include: /node_modules/,
     },
+    target: 'es2022',
     minify: 'esbuild',
     chunkSizeWarningLimit: 1500,
   },
