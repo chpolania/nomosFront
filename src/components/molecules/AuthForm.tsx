@@ -1,14 +1,32 @@
 import { useState, type FormEvent } from 'react'
+import { login } from '../../database/database'
 
-function AuthForm() {
+type AuthFormProps = {
+  onAuthenticated?: () => void
+}
+
+function AuthForm({ onAuthenticated }: AuthFormProps) {
   const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [notice, setNotice] = useState('')
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    setNotice(
-      'La interfaz de acceso está lista. Conecta este formulario con el servicio de autenticación de Nomos.',
-    )
+    const data = new FormData(event.currentTarget)
+    setLoading(true)
+    setNotice('')
+    try {
+      await login({
+        username: String(data.get('username') ?? ''),
+        password: String(data.get('password') ?? ''),
+      })
+      setNotice('Sesión iniciada correctamente.')
+      onAuthenticated?.()
+    } catch {
+      setNotice('Usuario o contraseña incorrectos, o el servicio no está disponible.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -20,13 +38,13 @@ function AuthForm() {
       </p>
 
       <div className="form-field">
-        <label htmlFor="email">Correo electrónico</label>
+        <label htmlFor="username">Usuario</label>
         <input
-          id="email"
-          name="email"
-          type="email"
-          autoComplete="email"
-          placeholder="nombre@empresa.com"
+          id="username"
+          name="username"
+          type="text"
+          autoComplete="username"
+          placeholder="Ingresa tu usuario"
           required
         />
       </div>
@@ -70,8 +88,8 @@ function AuthForm() {
         </button>
       </div>
 
-      <button className="button button--ink" type="submit">
-        Iniciar sesión
+      <button className="button button--ink" type="submit" disabled={loading}>
+        {loading ? 'Ingresando…' : 'Iniciar sesión'}
       </button>
 
       {notice && (

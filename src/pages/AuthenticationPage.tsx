@@ -2,7 +2,11 @@ import BrandLogo from '../components/atoms/BrandLogo'
 import CmykBar from '../components/atoms/CmykBar'
 import AuthenticationPanel from '../components/organisms/AuthenticationPanel'
 
-function AuthenticationPage() {
+type AuthenticationPageProps = {
+  onAuthenticated?: () => void
+}
+
+function AuthenticationPage({ onAuthenticated }: AuthenticationPageProps) {
   return (
     <div className="auth-page">
       <CmykBar />
@@ -12,7 +16,7 @@ function AuthenticationPage() {
           ← Volver al sitio
         </a>
       </header>
-      <AuthenticationPanel />
+      <AuthenticationPanel onAuthenticated={onAuthenticated} />
     </div>
   )
 }
